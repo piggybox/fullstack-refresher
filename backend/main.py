@@ -1,7 +1,7 @@
 from typing import List
 
 from database import Transaction
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from models import TransactionBase, TransactionModel, db_dependency
 
@@ -9,7 +9,13 @@ app = FastAPI()
 
 origins = ["http://localhost:3000"]  # for react
 
-app.add_middleware(CORSMiddleware, allow_origins=origins)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.post("/transactions/", response_model=TransactionModel)
