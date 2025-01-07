@@ -1,8 +1,9 @@
-from pydantic import BaseModel
-from database import SessionLocal
 from typing import Annotated
-from sqlalchemy.orm import Session
+
+from database import Base, SessionLocal, engine
 from fastapi import Depends
+from pydantic import BaseModel
+from sqlalchemy.orm import Session
 
 
 # It does feel redundant to have two model definitions (one for Pydantic, one for database)
@@ -31,6 +32,5 @@ def get_db():
 
 db_dependency = Annotated[Session, Depends(get_db)]
 
-from database import Base, engine
 
 Base.metadata.create_all(bind=engine)

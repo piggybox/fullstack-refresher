@@ -1,16 +1,15 @@
+from typing import List
+
+from database import Transaction
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from typing import List
+from models import TransactionBase, TransactionModel, db_dependency
 
 app = FastAPI()
 
 origins = ["http://localhost:3000"]  # for react
 
 app.add_middleware(CORSMiddleware, allow_origins=origins)
-
-
-from database import Transaction
-from models import TransactionBase, TransactionModel, db_dependency
 
 
 @app.post("/transactions/", response_model=TransactionModel)
@@ -25,4 +24,4 @@ async def create_transaction(transaction: TransactionBase, db: db_dependency):
 
 @app.get("/transactions", response_model=List[TransactionModel])
 async def read_transactions(db: db_dependency, skip: int = 0, limit: int = 100):
-    pass
+    transactions = db.query(Transaction).offset(skip).limit(limit).all()
