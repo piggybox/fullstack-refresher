@@ -54,6 +54,24 @@ const App = () => {
           </a>
         </div>
       </nav>
+
+      <div className="container">
+        <form onSubmit={handleFormSubmit}>
+          <div className="mb-3 mt-3">
+            <label htmlFor="amount" className="form-label">
+              Amount
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="amount"
+              name="amount"
+              onChange={handleInputChange}
+              value={formData.amount}
+            />
+          </div>
+        </form>
+      </div>
     </div>
   )
 }
