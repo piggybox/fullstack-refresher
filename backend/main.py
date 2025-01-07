@@ -25,3 +25,4 @@ async def create_transaction(transaction: TransactionBase, db: db_dependency):
 @app.get("/transactions", response_model=List[TransactionModel])
 async def read_transactions(db: db_dependency, skip: int = 0, limit: int = 100):
     transactions = db.query(Transaction).offset(skip).limit(limit).all()
+    return transactions
